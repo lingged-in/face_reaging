@@ -70,6 +70,51 @@ This model can be tested with the Gradio demos, available on Hugging Face and on
 - **Image Animation Demo**: In this demo, one does not have to specify a target age: Instead, a video will be shown where we cycle through the target age between 10 - 95.
 - **Video Inference Demo**: In this demo, one can apply the model onto a video. The video is processed frame-by-frame. 
 
+## Windows desktop app (local wrapper)
+
+This repository includes a lightweight Windows desktop wrapper so you can run the model locally with a simple UI. The app lets you drop/select an image, enter the source/target ages, and generate the re-aged image on your machine.
+
+### 1) Download the model weights
+
+You will need the pre-trained U-Net weights:
+
+- Download from Hugging Face: https://huggingface.co/timroelofs123/face_re-aging
+- File name: `best_unet_model.pth`
+
+Place the file somewhere on disk (for example: `C:\models\face-reaging\best_unet_model.pth`).
+
+### 2) Install dependencies
+
+From the repository root, create an environment and install dependencies:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+If you want drag & drop support, make sure `tkinterdnd2` is installed (it is included in `requirements.txt`).
+
+### 3) Launch the app
+
+Run the Windows GUI app script:
+
+```bash
+python scripts/windows_app.py --model_path "C:\models\face-reaging\best_unet_model.pth"
+```
+
+### 4) Use the app
+
+1. Click **Browse** to select your input image (or drag & drop the file into the window if `tkinterdnd2` is installed).
+2. Enter the **Source age** and **Target age**.
+3. Click **Generate**. The output image will be saved next to the input file by default.
+
+### Notes
+
+- If you prefer a different output location, click **Save as** before generating.
+- The model runs on CPU by default and will use CUDA automatically if a GPU is detected.
+
 
 
 <table>
@@ -90,6 +135,5 @@ The training dataset should consist of folders where each folder contains images
 e.g. `person1/10.jpg` is _person1_ at age 10 and `person1/20.jpg` is the same person at age 20.
 
 To finetune a model using the pre-trained models, one can download the U-Net and discriminator models from [Hugging Face](https://huggingface.co/timroelofs123/face_re-aging).
-
 
 
