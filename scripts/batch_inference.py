@@ -41,6 +41,7 @@ def load_model(model_path: Path) -> UNet:
     model = UNet().to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
+    print(f"model device: {next(model.parameters()).device}")
     return model
 
 
@@ -62,10 +63,11 @@ def process_folder(
                 source_age=source_age,
                 target_age=target_age,
             )
-            output_name = f"{image_path.stem}_aged_{target_age}{image_path.suffix}"
+            output_name = f"{image_path.stem}{image_path.suffix}"
             result.save(output_dir / output_name)
-        except Exception:
-            continue
+            print(f"[OK] Processed {image_path.name} -> {output_name}")
+        except Exception as exc:
+            print(f"[FAIL] {image_path.name}: {exc}")
 
 
 def main() -> None:
