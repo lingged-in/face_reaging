@@ -116,6 +116,31 @@ python scripts/windows_app.py --model_path "C:\models\face-reaging\best_unet_mod
 - The model runs on CPU by default and will use CUDA automatically if a GPU is detected.
 
 
+## Batch CLI inference
+
+If you want to process a folder of images with the same source and target age, use the batch inference script:
+
+```bash
+python scripts/batch_inference.py \
+  --model_path /path/to/best_unet_model.pth \
+  --input_dir /path/to/images \
+  --source_age 30 \
+  --target_age 60
+```
+
+PowerShell:
+
+```powershell
+python scripts/batch_inference.py `
+  --model_path "C:\path\to\best_unet_model.pth" `
+  --input_dir "C:\path\to\images" `
+  --source_age 30 `
+  --target_age 60
+```
+
+The script writes outputs to a sibling folder next to the input directory (default suffix: `_aged`). If that folder exists, it will automatically create a numbered variant such as `_aged_v002`.
+
+
 
 <table>
     <tr>
@@ -135,5 +160,4 @@ The training dataset should consist of folders where each folder contains images
 e.g. `person1/10.jpg` is _person1_ at age 10 and `person1/20.jpg` is the same person at age 20.
 
 To finetune a model using the pre-trained models, one can download the U-Net and discriminator models from [Hugging Face](https://huggingface.co/timroelofs123/face_re-aging).
-
 
